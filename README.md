@@ -3,7 +3,8 @@
 This tool is designed to **automatically re-publish all APIs** currently in the `PUBLISHED` state after a WSO2 API Manager migration.  
 Supports **multi-tenancy**—run the client **per tenant** for tenant-specific API redeployment.
 
-✅ **Tested on**: `WSO2 API Manager 3.2.1
+✅ **Tested on**: `WSO2 API Manager 3.2.1`  
+💡 *Compatible with newer versions by updating* `carbon.apimgt.version` *in* `pom.xml`.
 
 ---
 
