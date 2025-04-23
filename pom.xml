@@ -116,6 +116,6 @@
 
     </build>
     <properties>
-        <carbon.apimgt.version>9.0.174</carbon.apimgt.version>
+        <carbon.apimgt.version>6.7.210</carbon.apimgt.version>
     </properties>
 </project>

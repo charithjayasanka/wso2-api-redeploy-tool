@@ -30,3 +30,4 @@ target/
 
 # config files
 client-truststore.jks.idea/
+/target/
