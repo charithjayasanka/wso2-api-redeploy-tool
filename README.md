@@ -1,52 +1,38 @@
-# custom_migration
-Used to Republish all the APIs which are already at PUBLISHED state after migration. \
-If you have multi tenancy need to run the migration client per each tenant. \
-Tested in wso2am-3.2.0+1632415863879
+# 🚀 Custom API Migration Client for WSO2 API Manager
 
-# Steps to follow
+This tool is designed to **automatically re-publish all APIs** currently in the `PUBLISHED` state after a WSO2 API Manager migration.  
+Supports **multi-tenancy**—run the client **per tenant** for tenant-specific API redeployment.
 
-1. Copy the **client-truststore.jks**  file resides **<APIM_HOME>/repository/resources/security** directory and place it inside the migration client stored location 
-2. Please note that ,all three files; **client-truststore.jks, Migration-Client-1.0-SNAPSHOT-jar-with-dependencies.jar, and the config.properties** files  should be stored in the same location. 
-3. Modify the **config.properties** file accordingly - refer the sample config.properties file attached 
+✅ **Tested on**: `WSO2 API Manager 3.2.1
 
-```  
-# Trust-store configurations 
-# If you have setup a different client-truststore name in Gateway please change the name accordingly 
-TRUSTSTORE.PATH = client-truststore.jks 
-TRUSTSTORE.PASSWORD = <trust-store_password> 
+---
 
-# Residnet-KM configurations 
-RESIDENTKM.DCR.URL = https://<KM_HOST_NAME>:<PORT>/client-registration/v0.17/register 
-RESIDENTKM.TOKEN.URL = https://<KM_HOST_NAME>:<PORT>/oauth2/token 
-RESIDENTKM.USERNAME = <TENANT_ADMIN_USERNAME> 
-RESIDENTKM.PASSWORD = <TENANT_ADMIN_PASSWORD> 
+## 📦 Prerequisites
 
-# Publisher REST API configurations 
-PUBLISHER.REST.URL = https://<PUBLISHER_HOST_NAME>:<PORT>/api/am/publisher/v1/apis 
+Before running the migration client, ensure the following files are present in the **same directory**:
 
-# Migration client parameters 
-# configure "true" 
-RUN.API.REDEPLOY = true 
+- `Migration-Client-1.0-SNAPSHOT-jar-with-dependencies.jar`
+- `client-truststore.jks` (copy from `<APIM_HOME>/repository/resources/security`)
+- `config.properties` (configure as shown below)
 
-# configure thread sleep time between API redeploying 
-API.REDEPLOY.THREAD.SLEEP.TIME = <THREAD_SLEEP_TIME_IN_MILISECONDS> 
-```
+---
 
-4. Run the Client to re-publish all APIs with below command
+## ⚙️ Configuration: `config.properties`
 
-`java -jar Migration-Client-1.0-SNAPSHOT-jar-with-dependencies.jar`
+```properties
+# Truststore Configuration
+TRUSTSTORE.PATH = client-truststore.jks
+TRUSTSTORE.PASSWORD = <trust-store_password>
 
-To get the terminal log to a different log file, execute the below command. 
-`java -jar Migration-Client-1.0-SNAPSHOT-jar-with-dependencies.jar > migration_client_log_<tenant_Name>.txt`
+# Resident Key Manager Endpoints
+RESIDENTKM.DCR.URL = https://<KM_HOST>:<PORT>/client-registration/v0.17/register
+RESIDENTKM.TOKEN.URL = https://<KM_HOST>:<PORT>/oauth2/token
+RESIDENTKM.USERNAME = <TENANT_ADMIN_USERNAME>
+RESIDENTKM.PASSWORD = <TENANT_ADMIN_PASSWORD>
 
-You will see a similar log in terminal or migration_client_log_<tenant_Name>.txt as follows when migration client is started . 
-```
-............ Starting API redeploying ............ 
-log4j:WARN No appenders could be found for logger (org.apache.http.client.protocol.RequestAddCookies).
-log4j:WARN Please initialize the log4j system properly.
-............ Redeploying 12 APIs ............ 
-....... API Migrate1 is currently at state PUBLISHED
-....... Re-deploying Migrate1 has started 
-....... Re-deploying Migrate1 has finished 
+# Publisher REST API Endpoint
+PUBLISHER.REST.URL = https://<PUBLISHER_HOST>:<PORT>/api/am/publisher/v1/apis
 
-```
+# Migration Parameters
+RUN.API.REDEPLOY = true
+API.REDEPLOY.THREAD.SLEEP.TIME = <THREAD_SLEEP_TIME_IN_MS>
